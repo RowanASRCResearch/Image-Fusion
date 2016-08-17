@@ -1,9 +1,9 @@
-import argparse
-import ImageMerge
-import PixelProcess
-import peopledetect
 import cmd
 import re
+
+from Merging import ImageMerge, PixelProcess
+from Recognition import peopledetect
+
 
 class Console(cmd.Cmd):
 

@@ -1,15 +1,18 @@
 from __future__ import division
-from pprint import pprint
+
+import json
 import math
+import os
+import sys
+import traceback
+import warnings
+from pprint import pprint
+
 from PIL import Image
 from PIL.ExifTags import TAGS
-import os
-import traceback
-import sys
-import warnings
-import json
-import ImageMerge
-import PixelProcess
+
+from Merging import ImageMerge, PixelProcess
+
 
 # EXAMPLE ARGS
 # 1.82 "C:\Users\Bob S\PycharmProjects\Image-Fusion\Input\IMG_base.jpg" "C:\Users\Bob S\PycharmProjects\Image-Fusion\Input\IMG_two.jpg" "C:\Users\Bob S\PycharmProjects\Image-Fusion\Input\IMG_onehalf.jpg" "C:\Users\Bob S\PycharmProjects\Image-Fusion\Input\IMG_half.jpg"

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import numpy as np
 import cv2
 
 help_message = '''
@@ -23,21 +22,16 @@ def draw_detections(img, rects, thickness = 1):
 
 
 def detect(inputs):
-    import sys
-    from glob import glob
-    import itertools as it
 
     print help_message
 
     hog = cv2.HOGDescriptor()
     hog.setSVMDetector( cv2.HOGDescriptor_getDefaultPeopleDetector() )
 
-    # for fn in it.chain(*map(glob, sys.argv[1:])):
     for fn in inputs:
         print fn, ' - ',
         try:
             img = cv2.imread(fn)
-            #oimg = cv2.imread(fn)
         except:
             print 'loading error'
             continue
@@ -54,7 +48,6 @@ def detect(inputs):
         draw_detections(img, found_filtered, 3)
         print '%d (%d) found' % (len(found_filtered), len(found))
         cv2.imshow('img', img)
-        #cv2.imshow('img', oimg)
         ch = 0xFF & cv2.waitKey()
         if ch == 27:
             break

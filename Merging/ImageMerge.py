@@ -1,4 +1,5 @@
 from PIL import Image
+
 import PixelProcess
 
 debug = 0

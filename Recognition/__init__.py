@@ -1,0 +1,3 @@
+import peopledetect
+
+all = ['peopledetect']

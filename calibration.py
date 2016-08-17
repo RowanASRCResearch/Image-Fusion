@@ -1,6 +1,13 @@
 from __future__ import division
-import sys, json, os, math, PixelProcess, ImageMerge
+
+import json
+import math
+import os
+import sys
+
 from PIL import Image
+
+from Merging import ImageMerge, PixelProcess
 
 """
 Example ARGS:
