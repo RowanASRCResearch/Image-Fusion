@@ -136,6 +136,18 @@ class Merger:
         self.merge(*images)
 
     def _tupleSub(self, t, tt):
+        """
+        `Author`: Bill Clark
+
+        Finds the difference of each RGB value in two pixels. The difference has to be
+        greater than 5 to fail.
+
+        `t`: The first pixel to compare.
+
+        `tt`: The second to compare.
+
+        `return`: False if the difference between any RGB is greater than 5, else true.
+        """
         for one, two in zip(t, tt):
             if abs(one - two) > 5:
                 return False
@@ -143,6 +155,23 @@ class Merger:
 
 
     def cropFind(self, outfile, smallImage):
+        """
+        `Author`: Bill Clark
+
+        Finds where a subimage of the tracked image fits in the tracked image.
+        This is done by comparing the sides of the outfile image with each
+        row of pixels in the tracked image. This acommodates for rotation. The match
+        is as close to exact as is practical. Saving and cropping images can sometimes
+        cause small differences such as 1 or or 2 values.
+        The if result not none section can be replaced later to change what is done
+        with the result.
+
+        `outfile`: path to save the merged crop to.
+
+        `smallImage`: A subimage of the tracked image.
+
+        `return`: None if no match is found, the result is one is.
+        """
         smim = Image.open(smallImage)
         smdata = smim.load()
         xlen, ylen = smim.size
@@ -173,15 +202,13 @@ class Merger:
                         elif len(row) < xlen:
                            row.append(self.processor.outdata[x+len(row),y])
                     for s in range(0, 4, 2):
-                        # print row
-                        # print sides[s]
-                        # print sides[s] == row
                         flag = 1
                         for sm, lg in zip(sides[s], row):
                             if not self._tupleSub(sm, lg):
                                 flag = 0
                                 break
                         if flag: result =  x, y, s
+
                 if (x + ylen) <= self.outimage.size[0]:
                     while len(row) != ylen: #get the row to match the size.
                         if len(row) > ylen:
@@ -189,9 +216,6 @@ class Merger:
                         elif len(row) < ylen:
                            row.append(self.processor.outdata[x+len(row),y])
                     for s in range(1, 4, 2):
-                        # print row
-                        # print sides[s]
-                        # print sides[s] == row
                         flag = 1
                         for sm, lg in zip(sides[s], row):
                             if not self._tupleSub(sm, lg):
@@ -210,6 +234,7 @@ class Merger:
                     imdata[newx, newy] = smdata[x,y]
 
             im.save(outfile)
+            return result
         self.exportMerge(outfile, outfile)
 
     def checkAndAct(self, img):
